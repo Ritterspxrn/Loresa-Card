@@ -157,18 +157,23 @@
         }
 
        function checkSong() {
-            const song = document.getElementById('songInput').value.toLowerCase();
-            if (song === 'neptun') {
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.remove('hidden');
+            const songInput = document.getElementById('songInput').value.toLowerCase();
             const audio = document.getElementById('song');
-            audio.play().catch(() => {
-                alert('Tap the play button on the audio player to start the song.');
-            });
-        } else {
-            alert('Wrong song! Try again.');
+            if (songInput === 'neptun') {
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step3').classList.remove('hidden');
+
+                // Safari requires explicit user interaction to play audio
+                audio.play().then(() => {
+                    console.log('Audio playing!');
+                }).catch((error) => {
+                    alert('Tap the play button on the audio player to start the song.');
+                });
+             } else {
+                alert('Wrong song! Try again.');
+             }
         }
-    }
+
 
         function checkDate() {
             const date = document.getElementById('dateInput').value;
