@@ -57,58 +57,12 @@
                 opacity: 1;
             }
         }
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-        @keyframes confetti {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        .balloon {
-            position: absolute;
-            width: 30px;
-            height: 40px;
-            background-color: #ff6f61;
-            border-radius: 50%;
-            animation: float 4s infinite;
-        }
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            width: 2px;
-            height: 20px;
-            background-color: #ff6f61;
-            transform: translateX(-50%);
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #ff6f61;
-            animation: confetti 4s linear infinite;
-        }
     </style>
 </head>
 <body>
     <div class="card" id="passwordStep">
         <h1>Welcome, Loresa!</h1>
-        <p>Enter the secret password to continue (3 numbers):</p>
+        <p>Enter the secret password to continue:</p>
         <input type="text" id="passwordInput" placeholder="Enter the password">
         <button class="button" onclick="checkPassword()">Submit</button>
     </div>
@@ -126,7 +80,7 @@
     </div>
 
     <div class="card hidden" id="step3">
-        <audio id="song" src="https://www.dropbox.com/scl/fi/nhn1i4gvtye80dy5ip44q/Neptun-1.mp3?rlkey=zkpxthj7s22dkc45bmxplk3vl&st=qp5n67nt&dl=0" controls></audio>
+        <audio id="song" src="https://www.dropbox.com/scl/fi/nhn1i4gvtye80dy5ip44q/Neptun-1.mp3?raw=1" controls></audio>
         <p>Now tell me, what was the date we last saw each other? (Format: DD.MM.YYYY)</p>
         <input type="text" id="dateInput" placeholder="Enter the date">
         <button class="button" onclick="checkDate()">Submit</button>
@@ -136,16 +90,12 @@
         <p>You answered all right! I hope you had fun... Take care of yourself. See you. <3</p>
     </div>
 
-    <div id="balloons-container" class="hidden"></div>
-    <div id="confetti-container" class="hidden"></div>
-
     <script>
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
             if (password === '999') {
                 document.getElementById('passwordStep').classList.add('hidden');
                 document.getElementById('step1').classList.remove('hidden');
-                launchBalloons();
             } else {
                 alert('Wrong password! Try again.');
             }
@@ -156,65 +106,28 @@
             document.getElementById('step2').classList.remove('hidden');
         }
 
-       function checkSong() {
+        function checkSong() {
             const songInput = document.getElementById('songInput').value.toLowerCase();
             const audio = document.getElementById('song');
             if (songInput === 'neptun') {
                 document.getElementById('step2').classList.add('hidden');
                 document.getElementById('step3').classList.remove('hidden');
-
-                // Safari requires explicit user interaction to play audio
-                audio.play().then(() => {
-                    console.log('Audio playing!');
-                }).catch((error) => {
+                audio.play().catch(() => {
                     alert('Tap the play button on the audio player to start the song.');
                 });
-             } else {
+            } else {
                 alert('Wrong song! Try again.');
-             }
+            }
         }
 
-
         function checkDate() {
-            const date = document.getElementById('dateInput').value;
-            if (date === '25.12.24' || date === '25.12.2024') {
+            const dateInput = document.getElementById('dateInput').value;
+            if (dateInput === '25.12.24' || dateInput === '25.12.2024') {
                 document.getElementById('step3').classList.add('hidden');
                 document.getElementById('step4').classList.remove('hidden');
-                launchConfetti();
             } else {
                 alert('Wrong date! Try again.');
             }
-        }
-
-        function launchBalloons() {
-            const container = document.getElementById('balloons-container');
-            for (let i = 0; i < 10; i++) {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                balloon.style.left = Math.random() * 100 + 'vw';
-                balloon.style.animationDelay = Math.random() * 2 + 's';
-                balloon.style.backgroundColor = getRandomColor();
-                container.appendChild(balloon);
-            }
-            container.classList.remove('hidden');
-        }
-
-        function launchConfetti() {
-            const container = document.getElementById('confetti-container');
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDelay = Math.random() * 4 + 's';
-                confetti.style.backgroundColor = getRandomColor();
-                container.appendChild(confetti);
-            }
-            container.classList.remove('hidden');
-        }
-
-        function getRandomColor() {
-            const colors = ['#ff4d6d', '#ff9a9e', '#fad0c4', '#ffe6e6'];
-            return colors[Math.floor(Math.random() * colors.length)];
         }
     </script>
 </body>
