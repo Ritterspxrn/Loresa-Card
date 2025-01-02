@@ -156,17 +156,19 @@
             document.getElementById('step2').classList.remove('hidden');
         }
 
-        function checkSong() {
+       function checkSong() {
             const song = document.getElementById('songInput').value.toLowerCase();
             if (song === 'neptun') {
-                document.getElementById('step2').classList.add('hidden');
-                document.getElementById('step3').classList.remove('hidden');
-                document.getElementById('song').play();
-                launchConfetti();
-            } else {
-                alert('Wrong song! Try again.');
-            }
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+            const audio = document.getElementById('song');
+            audio.play().catch(() => {
+                alert('Tap the play button on the audio player to start the song.');
+            });
+        } else {
+            alert('Wrong song! Try again.');
         }
+    }
 
         function checkDate() {
             const date = document.getElementById('dateInput').value;
