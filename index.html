@@ -80,7 +80,7 @@
     </div>
 
     <div class="card hidden" id="step3">
-        <audio id="song" src="https://raw.githubusercontent.com/your-username/loresa-audio/main/Neptun.mp3" controls></audio>
+        <audio id="song" src="https://www.dropbox.com/scl/fi/nhn1i4gvtye80dy5ip44q/Neptun-1.mp3?raw=1" controls></audio>
         <p>Now tell me, what was the date we last saw each other? (Format: DD.MM.YYYY)</p>
         <input type="text" id="dateInput" placeholder="Enter the date">
         <button class="button" onclick="checkDate()">Submit</button>
@@ -113,6 +113,7 @@
                 document.getElementById('step2').classList.add('hidden');
                 document.getElementById('step3').classList.remove('hidden');
                 audio.play().catch(() => {
+                    alert('Tap the play button on the audio player to start the song.');
                 });
             } else {
                 alert('Wrong song! Try again.');
